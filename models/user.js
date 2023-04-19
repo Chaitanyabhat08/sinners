@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
         unique: true,
         validate: [validator.isEmail, "Please enter a valid email address"],
     },
+    phoneNumber: {
+        type: Number,
+        default: 9999999999,
+        minLength:[10,"Please enter a valid phone number"]
+    },
     password: {
         type: String,
         required: [true, 'Please enter password'],
@@ -46,6 +51,13 @@ const userSchema = new mongoose.Schema({
     resetPasswordTokenExpire: {
         type: Date,
     },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    address: {
+        type:String,
+    }
 });
 userSchema.pre("save", async function (next) {
         if (!this.isModified("password")) {
@@ -64,12 +76,16 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 //reset Password
-userSchema.methods.resetPassword = async function () {
-    //generating token
-    const passwordToken = crypto.randomBytes(20).toString("hex");
-    this.resetPasswordToken = crypto.createHash("sha256").update(passwordToken).digest("hex");
-    this.resetPasswordTokenExpire = Date.now() + 15 * 60 * 1000;
-    return passwordToken;
-}
+userSchema.methods.ResetPasswordToken = function () {
+    // Generating Token
+    const resetToken = crypto.randomBytes(20).toString("hex");
+    // Hashing and adding resetPasswordToken to userSchema
+    this.resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+    this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+    return resetToken;
+  };
 
 module.exports = mongoose.model('User',userSchema);

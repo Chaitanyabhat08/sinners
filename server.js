@@ -1,6 +1,6 @@
 const app = require('./app');
 //config
-
+const cloudinary = require('cloudinary');
 const dotenv = require('dotenv');
 const connect = require('./config/database');
 const connectDatabase = require('./config/database');
@@ -20,6 +20,11 @@ const server = app.listen(process.env.PORT, () => {
     console.log(`your server is running on http://localhost:${process.env.PORT}`)
 });
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 //unhandled promise rejection
 process.on('unhandledRejection', err => {
     console.log("Error: " + err.message);
