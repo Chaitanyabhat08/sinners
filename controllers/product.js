@@ -95,7 +95,7 @@ module.exports.createProductReviews = catchAsyncError(async (req, res, next) => 
     if (isReviewed) {
         product.reviews.forEach((rev) => {
             if (rev.user.toString() === req.user._id.toString()) {
-                rev.rating = rating,
+                rev.rating = rating
                 rev.comment = comment
             }
         });
