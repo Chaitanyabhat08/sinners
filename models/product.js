@@ -18,11 +18,16 @@ const product = new mongoose.Schema({
         type: String,
         required: [true, 'please mention gender'],
     },
-    size: [
-        {
+    size: [{
+        sizeLength:{
         type: String,
-        required:['true', 'please mention the cloth size'],
-    }],
+        required: ['true', 'please mention the clothes size'],
+        },
+        stockOfEach:{
+            type: Number,
+            required: ['true', 'please mention the stock of each'],
+        }
+}],
     price: {
         type: Number,
         required: [true, 'Please enter product price'],
