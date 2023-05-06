@@ -14,6 +14,15 @@ const product = new mongoose.Schema({
         type: String,
         required: [true, 'please enter product description'],
     },
+    gender: {
+        type: String,
+        required: [true, 'please mention gender'],
+    },
+    size: [
+        {
+        type: String,
+        required:['true', 'please mention the cloth size'],
+    }],
     price: {
         type: Number,
         required: [true, 'Please enter product price'],
