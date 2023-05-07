@@ -17,7 +17,9 @@ const product = new mongoose.Schema({
     gender: {
         type: String,
         required: [true, 'please mention gender'],
-    },
+        minlength: 1,
+        maxlength: 1,
+    },  
     size: [{
         sizeLength:{
         type: String,

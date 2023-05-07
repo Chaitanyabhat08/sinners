@@ -31,6 +31,7 @@ module.exports.createProduct = catchAsyncError(async (req, res, next) => {
         numOfReviews: req.body.numOfReviews ? req.body.numOfReviews : 'N/A',
         reviews: req.body.reviews ? req.body.reviews : 'N/A',
         user: req.body.user,
+        gender: req.body.gender ? req.body.gender : 'N/A',
         createdAt: new Date(),
     }
     const createProduct = await productModel.create(product);
