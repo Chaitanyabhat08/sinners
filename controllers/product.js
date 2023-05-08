@@ -16,6 +16,19 @@ module.exports.getAllProducts = catchAsyncError(async (req, res, next) => {
         resultPerPage,
     });
 });
+module.exports.getProductsCategoryWise = catchAsyncError(async (req, res, next) => {
+    console.log("params  bro", req.params);
+    const resultPerPage = 8;
+    const productCount = await productModel.countDocuments();
+    const apiFeature = new ApiFeatures(productModel.find(), req.query).search().filter();
+    const products = await apiFeature.query;
+    res.status(201).send({
+        success: true,
+        products,
+        productCount,
+        resultPerPage,
+    });
+});
 //create a new product
 module.exports.createProduct = catchAsyncError(async (req, res, next) => {
     req.body.user = req.user.id;
