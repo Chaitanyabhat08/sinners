@@ -16,7 +16,8 @@ module.exports.getAllProducts = catchAsyncError(async (req, res, next) => {
         resultPerPage,
     });
 });
-module.exports.getProductsCategoryWise = catchAsyncError(async (req, res, next) => {
+module.exports.getProductsCategoryWise = catchAsyncError(async (req, res) => {
+    console.log("yooyoyoyoyoyoyo");
     console.log("params  bro", req.params);
     const resultPerPage = 8;
     const productCount = await productModel.countDocuments();
