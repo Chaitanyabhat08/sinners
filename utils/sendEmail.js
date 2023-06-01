@@ -10,7 +10,7 @@ const sendEmail = catchAsyncError(async (options) => {
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
-        },
+      },
   });
     const mailOptions = {
         from: "bhatchaitanya420@gmail.com",

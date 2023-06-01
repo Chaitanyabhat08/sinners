@@ -5,8 +5,6 @@ const catchAsyncError = require('../middleware/asyncError');
 const ApiFeatures = require('../utils/apiFeatures');
 
 module.exports.getAllProducts = catchAsyncError(async (req, res, next) => {
-    console.log('heyyy')
-    console.log(req.query);
     const resultPerPage = 8;
     const productCount = await productModel.countDocuments();
     const apiFeature = new ApiFeatures(productModel.find(), req.query).search().filter();
