@@ -12,8 +12,6 @@ module.exports.processPayment = catchAsyncError(async function (req, res,next) {
       company: "S&S"
     },
   });
-  console.log('heyeyyeyye')
-  console.log(payment.client_secret)
   res.status(200).json({success:true, client_secret:payment.client_secret});
 });
 
