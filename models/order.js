@@ -57,15 +57,10 @@ const order = new mongoose.Schema({
         required: true,
     },
     paymentInfo: {
-        id: {
-            type: String,
-            required:true,
-        },
-        status: {
-            type: String,
-            required:true,
-        },
-
+        order_id: { type: String, required: true },
+        payment_id: { type: String, required: true },
+        razorpay_sign: { type: String, required: true },
+        status: {type: String, required: true },
     },
     paidAt: {
         type: Date,
