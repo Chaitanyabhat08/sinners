@@ -1,46 +1,9 @@
 const express = require('express');
-const app = express();
+const app = require('./app');
 const cloudinary = require('cloudinary');
 const dotenv = require('dotenv');
 const connectDatabase = require('./config/database');
-const Razorpay = require('razorpay');
-const shortid = require('shortid');
-const path = require('path');
-
 dotenv.config({ path: './config/.env' });
-
-const razorpay = new Razorpay({
-    key_id: "rzp_test_wBU9x1cN57zN3f",
-    key_secret: "uci7KIIDxHSlSJ62MlNaB1GB",
-});
-
-app.get('/logo.jpg', (req, res) => {
-    res.sendFile(path.join(__dirname, 'logo.jpg'));
-});
-
-app.post('/razorpay', async (req, res) => {
-    const payment_capture = 1;
-    const amount = 499;
-    const currency = 'INR';
-    const options = {
-        amount: amount * 100,
-        currency: currency,
-        receipt: shortid.generate(),
-        payment_capture
-    };
-
-    try {
-        const response = await razorpay.orders.create(options);
-        console.log('ress',response);
-        res.json({
-            id: response.id,
-            currency: response.currency,
-            amount: response.amount,
-        });
-    } catch (error) {
-        console.log(error);
-    }
-});
 
 // Handling uncaught exceptions
 process.on('uncaughtException', err => {

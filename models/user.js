@@ -55,9 +55,35 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    address: {
-        type:String,
-    }
+    address: [
+        {
+            lane: {
+                type: String,
+                required: true,
+            },
+            city: {
+                type: String,
+                required: true,
+            },
+            state: {
+                type: String,
+                required: true,
+            },
+            country: {
+                type: String,
+                required:true,
+            },
+            pinCode: {
+                type: String,
+                required: true,
+            },
+            phoneNo: {
+                type: String,
+                default: '9999999999',
+                minLength: [10, "Please enter a valid phone number"]
+            },
+        }
+    ]
 });
 userSchema.pre("save", async function (next) {
         if (!this.isModified("password")) {

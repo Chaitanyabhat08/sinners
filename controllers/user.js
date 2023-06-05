@@ -36,6 +36,7 @@ module.exports.registerUser = catchAsyncError(async (req, res, next) => {
 });
 
 module.exports.loginUser = async (req, res, next) => {
+    console.log("heyyyyyy");
     try {
         const { email, password } = req.body;
         //checking if password and email is present
@@ -234,4 +235,11 @@ module.exports.deleteUserProfileByAdmin = catchAsyncError(async function (req, r
         success: true,
         message:"User deleted successfully",
     });
+});
+
+module.exports.addNewAddress = catchAsyncError(async function (req, res, next) {
+    const user = await userModel.findById(req.user._id);
+    user.address.push(req.body); // Push the new address to the address array
+    await user.save(); // Save the updated user
+    res.redirect("/users/getMyDetails"); // Redirect to a success page or another route
 });
