@@ -36,7 +36,6 @@ module.exports.registerUser = catchAsyncError(async (req, res, next) => {
 });
 
 module.exports.loginUser = async (req, res, next) => {
-    console.log("heyyyyyy");
     try {
         const { email, password } = req.body;
         //checking if password and email is present
