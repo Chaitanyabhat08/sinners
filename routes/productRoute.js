@@ -16,9 +16,8 @@ const shortId = require("shortid");
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ACCESS_KEY,
   secretAccessKey: process.env.AWS_SECRET_KEY,
-  region: 'ap-south-1',
+  region: 'Asia Pacific (Mumbai) ap-south-1',
 });
-
 const upload = multer({
   storage: multerS3({
     s3: s3,
@@ -39,11 +38,11 @@ const upload = multer({
 
 router.post('/admin/products/createNewProduct', isAuthenticatedUser, authorizeRoles("admin"), upload, async (req, res) => {
   console.log(req.files)
-  const files = req.file;
+  const files = req.files;
   files.forEach(file => {
     console.log(file.originalname, file.location);
   });
-  console.log(req.file);
+  console.log(req.files);
   const product = {
     productId: shortId.generate(),
     name: req.body.name ? req.body.name : 'N/A',
