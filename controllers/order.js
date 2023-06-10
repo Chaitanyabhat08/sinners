@@ -6,11 +6,11 @@ const catchAsyncError = require('../middleware/asyncError');
 const ApiFeatures = require('../utils/apiFeatures');
 
 module.exports.newOrder = catchAsyncError(async function (req, res, next) {
-    const { shippingInfo, orderItems, paymentInfo, itemsPrice, taxPrice, shippingPrice, totalPrice } = req.body;
+    const { shippingInfo, orderInfo,cartItems } = req.body;
     
     const order = await orderModel.create({
-        shippingInfo, orderItems, paymentInfo, itemsPrice, taxPrice, shippingPrice, totalPrice, paidAt: Date.now(),
-        user: req.user._id
+        shippingInfo, paymentInfo: orderInfo, paidAt: Date.now(),
+        user: req.user._id,orderItems: cartItems
     });
     res.status(200).json({
         success: true,

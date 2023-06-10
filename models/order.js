@@ -26,31 +26,6 @@ const order = new mongoose.Schema({
             required:true,
         }
     },
-    orderItems: [
-        {
-            name: {
-                type: String,
-                required:true,
-            },
-            price: {
-                type: Number,
-                required:true,
-            },
-            quantity: {
-                type: Number,
-                required:true,
-            },
-            image: {
-                type: String,
-                required:true,
-            },
-            product: {
-                type: String,
-                ref: 'Product',
-                required:true,
-            },
-        },
-    ],
     user: {
         type: mongoose.Schema.ObjectId,
         ref: "User",
@@ -61,30 +36,11 @@ const order = new mongoose.Schema({
         payment_id: { type: String, required: true },
         razorpay_sign: { type: String, required: true },
         status: {type: String, required: true },
-    },
-    paidAt: {
-        type: Date,
-        required:true,
-    },
-    itemsPrice: {
-        type: Number,
-        required: true,
-        default: 0,
-    },
-    taxPrice: {
-        type: Number,
-        required: true,
-        default: 0,
-    },
-    shippingPrice: {
-        type: Number,
-        required: true,
-        default:0,
-    },
-    totalPrice: {
-        type: Number,
-        required: true,
-        default:0,  
+        subtotal: {type: Number, required: true},
+        shippingCharges: {type: Number, required: true},
+        tax: {type: Number, required: true},
+        totalPrice: {type: Number, required: true},
+        orderDate: {type: Date, required: true}
     },
     orderStatus: {
         type: String,
@@ -96,6 +52,10 @@ const order = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
+    orderItems: {
+        type: Array,
+        required: true,
+    }
 });
 
 module.exports = mongoose.model('Order', order);

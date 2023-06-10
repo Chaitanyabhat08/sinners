@@ -34,6 +34,7 @@ module.exports.displayRazor = catchAsyncError(async function (req, res) {
 });
 
 module.exports.verifyPayment = catchAsyncError(async function (req, res) {
+  console.log(req.params);
   let body = req.body.razorpay_order_id + "|" + req.body.razorpay_payment_id;
   var expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_SECRET_KEY )
     .update(body.toString())
