@@ -17,6 +17,7 @@ module.exports.getAllProducts = catchAsyncError(async (req, res, next) => {
     });
 });
 module.exports.createProduct = catchAsyncError(async (req, res, next) => {
+    console.log(req.body);
     req.body.user = req.user.id;
     const product = {
         productId: shortId.generate(),
@@ -33,10 +34,12 @@ module.exports.createProduct = catchAsyncError(async (req, res, next) => {
         gender: req.body.gender ? req.body.gender : 'N/A',
         createdAt: new Date(),
     }
+    console.log('object', product);
     const createProduct = await productModel.create(product);
+    console.log('this is created product', createProduct)
     res.status(201).json({
         success: true,
-        product
+        createProduct
     });
 });
 

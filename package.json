@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/Chaitanyabhat08/sinners#readme",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.348.0",
+    "aws-sdk": "^2.1394.0",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.36.4",
     "cookie-parser": "^1.4.6",
@@ -29,6 +31,8 @@
     "http-proxy-middleware": "^2.0.6",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.7.1",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^3.0.1",
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.22",
     "razorpay": "^2.8.6",
