@@ -14,27 +14,27 @@ const { Readable } = require("stream");
 const shortId = require("shortid");
 
 const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
-  region: 'Asia Pacific (Mumbai) ap-south-1',
+  accessKeyId: 'AKIA5S2JK4JY5EBZXFFN',
+  secretAccessKey: '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',
+  region: 'ap-south-1',
 });
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'saintsandsinners',
+    bucket: 'saintsandsinners2',
     acl: 'public-read',
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    metadata: function (req, file, cb) {
-      cb(null, { fieldName: file.fieldname });
+    metadata: function (req, files, cb) {
+      cb(null, { fieldName: files.fieldname });
     },
-    key: function (req, file, cb) {
+    key: function (req, files, cb) {
       cb(null, Date.now().toString());
     },
   }),
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB file size limit
   },
-}).array('images', 5);
+}).array('images', 2);
 
 router.post('/admin/products/createNewProduct', isAuthenticatedUser, authorizeRoles("admin"), upload, async (req, res) => {
   console.log(req.files)
