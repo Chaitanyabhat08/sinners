@@ -7,7 +7,7 @@ const ApiFeatures = require('../utils/apiFeatures');
 module.exports.getAllProducts = catchAsyncError(async (req, res, next) => {
     const resultPerPage = 8;
     const productCount = await productModel.countDocuments();
-    const apiFeature = new ApiFeatures(productModel.find(), req.query).search().filter();
+    const apiFeature = new ApiFeatures(productModel.find({ active: true }), req.query).search().filter();
     const products = await apiFeature.query;
     res.status(201).send({
         success:true,
@@ -71,8 +71,9 @@ module.exports.updateProduct = catchAsyncError(async (req, res, next) => {
     });
 });
 
-module.exports.deleteProduct = catchAsyncError(async (req, res, next) =>{
-    const product = await productModel.findOne({ productId: req.params.id });
+module.exports.deleteProduct = catchAsyncError(async (req, res, next) => {
+    console.log(req.params.id)
+    const product = await productModel.findById(req.params.id);
     if (!product) {
         return next(new ErrorHandler("Product not found", 404));
     }
@@ -91,7 +92,7 @@ module.exports.createProductReviews = catchAsyncError(async (req, res, next) => 
         rating: Number(rating),
         comment,
     }
-    const product = await productModel.findOne({ productId: req.body.productid });
+    const product = await productModel.findOne({ productId:productid });
     const isReviewed = product.reviews.find(
         (rev) => rev.user.toString() === req.user._id.toString()
     );

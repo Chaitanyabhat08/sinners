@@ -208,31 +208,40 @@ module.exports.getDetailsofUser = catchAsyncError(async function(req, res, next)
 });
 
 module.exports.updateUserProfileByAdmin = catchAsyncError(async function (req, res, next) {
-    const newUserData = {
-        name: req.body.name,
-        email: req.body.email,
-        role: req.body.role,
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+    phoneNumber: req.body.phoneNumber,
+  };
+
+  const user = await userModel.findByIdAndUpdate(
+    req.params.id,
+    newUserData,
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
     }
-    const user = await userModel.findById(req.params.id, newUserData, {
-        new: true,
-        runValidators: true,
-        usefindAndModify:false,
-    });
-    res.status(200).json({
-        success: true,
-        user,
-    });
+  );
+
+  console.log(user);
+  res.status(200).json({
+    success: true,
+    message: "User updated successfully",
+    user,
+  });
 });
 
 module.exports.deleteUserProfileByAdmin = catchAsyncError(async function (req, res, next) {
-    const user = await userModel.findById(req.parmas.id);
+    const user = await userModel.findById(req.params.id);
     if (!user) {
-        return next(new ErrorHandler(`User does not exist by ID :${req.params.id}`, 404));
+        return next(new ErrorHandler(`User does not exist by ID: ${req.params.id}`, 404));
     }
-    await userModel.remove();
+    await user.remove();
     res.status(200).json({
         success: true,
-        message:"User deleted successfully",
+        message: "User deleted successfully",
     });
 });
 
