@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const order = new mongoose.Schema({
     shippingInfo: {
-        adress: {
+        address: {
             type: String,
             required: true,
         },
@@ -21,7 +21,7 @@ const order = new mongoose.Schema({
             type: Number,
             required:true,
         },
-        phoneNumber: {
+        phoneNo: {
             type: Number,
             required:true,
         }
@@ -30,17 +30,6 @@ const order = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: "User",
         required: true,
-    },
-    paymentInfo: {
-        order_id: { type: String, required: true },
-        payment_id: { type: String, required: true },
-        razorpay_sign: { type: String, required: true },
-        status: {type: String, required: true },
-        subtotal: {type: Number, required: true},
-        shippingCharges: {type: Number, required: true},
-        tax: {type: Number, required: true},
-        totalPrice: {type: Number, required: true},
-        orderDate: {type: Date, required: true}
     },
     orderStatus: {
         type: String,
@@ -52,7 +41,15 @@ const order = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
-    orderItems: {
+    paymentInfo: {
+    orderId: { type: String },
+    subtotal: { type: Number },
+    shippingCharges: { type: Number },
+    tax: { type: Number },
+    totalPrice: { type: Number },
+    orderDate: { type: Date}
+    },
+    cartItems: {
         type: Array,
         required: true,
     }

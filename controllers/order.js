@@ -10,7 +10,7 @@ module.exports.newOrder = catchAsyncError(async function (req, res, next) {
     
     const order = await orderModel.create({
         shippingInfo, paymentInfo: orderInfo, paidAt: Date.now(),
-        user: req.user._id,orderItems: cartItems
+        user: req.user._id,cartItems
     });
     res.status(200).json({
         success: true,
