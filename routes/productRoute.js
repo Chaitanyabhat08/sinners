@@ -37,32 +37,33 @@ const upload = multer({
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB file size limit
   },
-});
+}).array('images', 5);
 
-router.post('/admin/products/createNewProduct', isAuthenticatedUser, authorizeRoles("admin"), async (req, res) => {
+router.post('/admin/products/createNewProduct', isAuthenticatedUser, authorizeRoles("admin"), upload, async (req, res) => {
   try {
-    console.log("thsis siss body", req.body)
+    console.log("this is body", req.body);
     const files = req.files;
-    console.log("this is files", files);
-    // files.forEach(file => {
-    //   console.log(file.originalname, file.location);
-    // });
+    console.log("these are files", files);
+    const images = files.map(file => {
+      return { public_id: file.originalname, url: file.location };
+    });
     const product = {
       productId: shortId.generate(),
-      name: req.body.name ? req.body.name : 'N/A',
-      description: req.body.description ? req.body.description : 'N/A',
-      price: req.body.price ? req.body.price : 'N/A',
-      rating: req.body.rating ? req.body.rating : 'N/A',
-      images: req.body.images ? req.body.images : 'N/A',
-      category: req.body.category ? req.body.category : 'N/A',
-      stock: req.body.stock ? req.body.stock : 1,
-      numOfReviews: req.body.numOfReviews ? req.body.numOfReviews : 'N/A',
-      reviews: req.body.reviews ? req.body.reviews : 'N/A',
+      name: req.body.name || 'N/A',
+      description: req.body.description || 'N/A',
+      price: req.body.price || 'N/A',
+      rating: req.body.rating || 5,
+      images: images || 'N/A',
+      category: req.body.category || 'N/A',
+      stock: req.body.stock || 1,
+      numOfReviews: req.body.numOfReviews || 0,
+      reviews: req.body.reviews || [],
       user: req.user._id,
-      gender: req.body.gender ? req.body.gender : 'N/A',
+      gender: req.body.gender || 'N/A',
       createdAt: new Date(),
-    }
+    };
     const createProduct = await productModel.create(product);
+    console.log(createProduct);
     res.status(201).json({ success: true, createProduct });
   } catch (error) {
     const err = new ErrorHandler(error.message, 500);

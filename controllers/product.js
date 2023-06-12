@@ -16,32 +16,32 @@ module.exports.getAllProducts = catchAsyncError(async (req, res, next) => {
         resultPerPage,
     });
 });
-module.exports.createProduct = catchAsyncError(async (req, res, next) => {
-    console.log(req.body);
-    req.body.user = req.user.id;
-    const product = {
-        productId: shortId.generate(),
-        name: req.body.name ? req.body.name : 'N/A',
-        description: req.body.description ? req.body.description : 'N/A',
-        price: req.body.price ? req.body.price : 'N/A',
-        rating: req.body.rating ? req.body.rating : 'N/A',
-        images: req.body.images ? req.body.images : 'N/A',
-        category: req.body.category ? req.body.category : 'N/A',
-        stock: req.body.stock ? req.body.stock : 1,
-        numOfReviews: req.body.numOfReviews ? req.body.numOfReviews : 'N/A',
-        reviews: req.body.reviews ? req.body.reviews : 'N/A',
-        user: req.body.user,
-        gender: req.body.gender ? req.body.gender : 'N/A',
-        createdAt: new Date(),
-    }
-    console.log('object', product);
-    const createProduct = await productModel.create(product);
-    console.log('this is created product', createProduct)
-    res.status(201).json({
-        success: true,
-        createProduct
-    });
-});
+// module.exports.createProduct = catchAsyncError(async (req, res, next) => {
+//     console.log(req.body);
+//     req.body.user = req.user.id;
+//     const product = {
+//         productId: shortId.generate(),
+//         name: req.body.name ? req.body.name : 'N/A',
+//         description: req.body.description ? req.body.description : 'N/A',
+//         price: req.body.price ? req.body.price : 'N/A',
+//         rating: req.body.rating ? req.body.rating : 'N/A',
+//         images: req.body.images ? req.body.images : 'N/A',
+//         category: req.body.category ? req.body.category : 'N/A',
+//         stock: req.body.stock ? req.body.stock : 1,
+//         numOfReviews: req.body.numOfReviews ? req.body.numOfReviews : 'N/A',
+//         reviews: req.body.reviews ? req.body.reviews : 'N/A',
+//         user: req.body.user,
+//         gender: req.body.gender ? req.body.gender : 'N/A',
+//         createdAt: new Date(),
+//     }
+//     console.log('object', product);
+//     const createProduct = await productModel.create(product);
+//     console.log('this is created product', createProduct)
+//     res.status(201).json({
+//         success: true,
+//         createProduct
+//     });
+// });
 
 module.exports.getProductDetails = catchAsyncError(async (req, res, next) => {
     const product = await productModel.findById(req.params.id);

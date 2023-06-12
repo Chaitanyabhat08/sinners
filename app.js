@@ -9,7 +9,8 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileUpload());
+// app.use(express.urlencoded({ extended: true }));
+// app.use(fileUpload());
 app.use(cors());
 //route imports
 const product = require('./routes/productRoute');
