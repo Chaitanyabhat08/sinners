@@ -52,3 +52,17 @@ module.exports.verifyPayment = catchAsyncError(async function (req, res) {
     res.redirect(`http://localhost:3000/payment/failed`);
    }
 });
+
+module.exports.getAllOrders = catchAsyncError(async function (req, res) {
+  var instance = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_SECRET_KEY,
+  });
+  const option = {
+    authorized: 1,
+    expand: ["payments"],
+    count:100,
+  }
+  var {items} = await instance.orders.all(option);
+  res.status(200).json({ success: true, items });
+});

@@ -63,7 +63,6 @@ router.post('/admin/products/createNewProduct', isAuthenticatedUser, authorizeRo
       createdAt: new Date(),
     };
     const createProduct = await productModel.create(product);
-    console.log(createProduct);
     res.status(201).json({ success: true, createProduct });
   } catch (error) {
     const err = new ErrorHandler(error.message, 500);
