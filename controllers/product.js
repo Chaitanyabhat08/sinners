@@ -16,32 +16,6 @@ module.exports.getAllProducts = catchAsyncError(async (req, res, next) => {
         resultPerPage,
     });
 });
-// module.exports.createProduct = catchAsyncError(async (req, res, next) => {
-//     console.log(req.body);
-//     req.body.user = req.user.id;
-//     const product = {
-//         productId: shortId.generate(),
-//         name: req.body.name ? req.body.name : 'N/A',
-//         description: req.body.description ? req.body.description : 'N/A',
-//         price: req.body.price ? req.body.price : 'N/A',
-//         rating: req.body.rating ? req.body.rating : 'N/A',
-//         images: req.body.images ? req.body.images : 'N/A',
-//         category: req.body.category ? req.body.category : 'N/A',
-//         stock: req.body.stock ? req.body.stock : 1,
-//         numOfReviews: req.body.numOfReviews ? req.body.numOfReviews : 'N/A',
-//         reviews: req.body.reviews ? req.body.reviews : 'N/A',
-//         user: req.body.user,
-//         gender: req.body.gender ? req.body.gender : 'N/A',
-//         createdAt: new Date(),
-//     }
-//     console.log('object', product);
-//     const createProduct = await productModel.create(product);
-//     console.log('this is created product', createProduct)
-//     res.status(201).json({
-//         success: true,
-//         createProduct
-//     });
-// });
 
 module.exports.getProductDetails = catchAsyncError(async (req, res, next) => {
     const product = await productModel.findById(req.params.id);
@@ -85,14 +59,14 @@ module.exports.deleteProduct = catchAsyncError(async (req, res, next) => {
 });
 
 module.exports.createProductReviews = catchAsyncError(async (req, res, next) => {
-    const { rating, comment, productid } = req.body;
+    const { rating, comment, productId } = req.body;
     const review = {
         user: req.user._id,
         name: req.user.name,
         rating: Number(rating),
         comment,
     }
-    const product = await productModel.findOne({ productId:productid });
+    const product = await productModel.findById(productId);
     const isReviewed = product.reviews.find(
         (rev) => rev.user.toString() === req.user._id.toString()
     );
@@ -111,7 +85,7 @@ module.exports.createProductReviews = catchAsyncError(async (req, res, next) => 
     product.reviews.forEach(rev => {
         avg += rev.rating;
     })
-    product.ratings = avg / product.reviews.length;
+    product.rating = avg / product.reviews.length;
     await product.save({ validateBeforeSave: false });
     res.status(200).json({
         status: true,

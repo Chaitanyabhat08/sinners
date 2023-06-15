@@ -9,8 +9,11 @@ module.exports.newOrder = catchAsyncError(async function (req, res, next) {
     const { shippingInfo, orderInfo,cartItems } = req.body;
     
     const order = await orderModel.create({
-        shippingInfo, paymentInfo: orderInfo, paidAt: Date.now(),
-        user: req.user._id,cartItems
+        shippingInfo,
+        paymentInfo: orderInfo,
+        paidAt: Date.now(),
+        user: new ObjectId(req.user._id),
+        cartItems
     });
     res.status(200).json({
         success: true,
@@ -30,10 +33,10 @@ module.exports.getSingleOrder = catchAsyncError(async function (req, res, next) 
 });
 
 module.exports.myOrders = catchAsyncError(async function (req, res, next) {
-    const order = await orderModel.find({ user: req.user._id });
+    const orders = await orderModel.find({ user: req.user._id });
     res.status(200).json({
         success: true,
-        order,
+        orders,
     });
 });
 
@@ -63,7 +66,8 @@ module.exports.deleteOrder = catchAsyncError(async function (req, res, next) {
 });
 
 module.exports.updateOrderStatus = catchAsyncError(async function (req, res, next) {
-    const order = await orderModel.findById(req.params.id);
+    console.log(req.body)
+    const order = await orderModel.findById(req.body.orderId);
     if (!order) {
         return next(new ErrorHandler('Order not found', 404));
     }
