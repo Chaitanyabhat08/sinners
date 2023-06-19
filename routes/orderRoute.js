@@ -7,7 +7,7 @@ router.post('/order/new', isAuthenticatedUser, newOrder);
 router.get('/order/getmyorder/:id', isAuthenticatedUser, getSingleOrder);
 router.get('/order/getmyorders', isAuthenticatedUser, myOrders);
 router.get('/admin/order/getAllOrders', isAuthenticatedUser, authorizeRoles("admin"), getAllOrders);
-router.delete('/order/deleteOrder', isAuthenticatedUser,authorizeRoles("admin"), deleteOrder);
+router.delete('/admin/order/deleteOrder/:id', isAuthenticatedUser,authorizeRoles("admin"), deleteOrder);
 router.put('/admin/order/updateOrderStatus', isAuthenticatedUser, authorizeRoles("admin"), updateOrderStatus);
 
 module.exports = router;

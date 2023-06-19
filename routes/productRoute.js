@@ -41,9 +41,7 @@ const upload = multer({
 
 router.post('/admin/products/createNewProduct', isAuthenticatedUser, authorizeRoles("admin"), upload, async (req, res) => {
   try {
-    console.log("this is body", req.body);
     const files = req.files;
-    console.log("these are files", files);
     const images = files.map(file => {
       return { public_id: file.originalname, url: file.location };
     });
